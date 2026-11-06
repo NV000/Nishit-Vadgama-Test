@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "672373017992",
+    "project_id": "nv-demo-b2725",
+    "storage_bucket": "nv-demo-b2725.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672373017992:android:f72eea7d15d1e8bcd27e3d",
+        "android_client_info": {
+          "package_name": "com.example.nishit_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5lwT2_lGD1CyMW1UPaAYCcZx2fYh445Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672373017992:android:aae6574d88b668d5d27e3d",
+        "android_client_info": {
+          "package_name": "com.example.nishit_vadgama"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5lwT2_lGD1CyMW1UPaAYCcZx2fYh445Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
