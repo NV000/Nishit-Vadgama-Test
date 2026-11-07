@@ -38,7 +38,8 @@ class MealFilterResponse {
 
   MealFilterResponse({this.meals = const []});
 
-  factory MealFilterResponse.fromJson(Map<String, dynamic> json, {String? category}) {
+  factory MealFilterResponse.fromJson(Map<String, dynamic> json,
+      {String? category}) {
     return MealFilterResponse(
       meals: (json['meals'] as List<dynamic>?)
               ?.map((e) => MealItem.fromJson(
@@ -75,19 +76,13 @@ class MealItem {
   double get price => 50.0;
   int get calories => 10;
 
-  bool get isVeg {
-    final cat = (category ?? '').toLowerCase();
-    if (cat == 'vegetarian' || cat == 'vegan' || cat == 'dessert') {
-      return true;
-    }
-    final name = strMeal.toLowerCase();
-    return name.contains('veg') || name.contains('paneer') || name.contains('salad');
-  }
-
   String get location {
     final area = strArea?.trim();
     final country = strCountry?.trim();
-    if (area != null && area.isNotEmpty && country != null && country.isNotEmpty) {
+    if (area != null &&
+        area.isNotEmpty &&
+        country != null &&
+        country.isNotEmpty) {
       if (area.toLowerCase() == country.toLowerCase()) return country;
       return '$area, $country';
     }

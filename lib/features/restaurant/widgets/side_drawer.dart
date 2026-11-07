@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../core/extensions/app_extensions.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/app_image.dart';
@@ -26,7 +27,8 @@ class SideDrawer extends StatelessWidget {
 
             return Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 50, bottom: 28, left: 20, right: 20),
+              padding: const EdgeInsets.only(
+                  top: 50, bottom: 28, left: 20, right: 20),
               decoration: BoxDecoration(
                 color: colors.secondary,
                 borderRadius: const BorderRadius.only(
@@ -114,13 +116,9 @@ class SideDrawer extends StatelessWidget {
         title: Text(l10n.logoutConfirmTitle, style: AppTextStyles.title),
         content: Text(l10n.logoutConfirmMessage, style: AppTextStyles.body),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(l10n.cancel, style: AppTextStyles.subtitle),
-          ),
           FilledButton(
             style: FilledButton.styleFrom(
-              backgroundColor: colors.secondary,
+              backgroundColor: colors.error,
               foregroundColor: colors.onSecondary,
             ),
             onPressed: () {
@@ -128,6 +126,15 @@ class SideDrawer extends StatelessWidget {
               authController.logout();
             },
             child: Text(l10n.logout, style: AppTextStyles.subtitle),
+          ),
+          SizedBox(height: 10),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: colors.outline,
+              foregroundColor: colors.primary,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.cancel, style: AppTextStyles.subtitle),
           ),
         ],
       ),
