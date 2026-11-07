@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../../core/storage/secure_storage.dart';
 import '../model/user_model.dart';
 
@@ -73,7 +74,9 @@ class AuthRepository {
   Future<UserModel?> getCachedUser() async {
     final currentUser = _firebaseAuth.currentUser;
     final json = await SecureStorage.getUserJson();
-    final cached = (json != null && json.isNotEmpty) ? UserModel.fromJsonString(json) : null;
+    final cached = (json != null && json.isNotEmpty)
+        ? UserModel.fromJsonString(json)
+        : null;
 
     if (currentUser != null) {
       return UserModel(

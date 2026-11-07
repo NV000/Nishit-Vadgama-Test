@@ -155,23 +155,27 @@ class CheckoutPage extends GetView<RestaurantController> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                QuantityStepper(
-                                  quantity: item.quantity,
-                                  backgroundColor: colors.primary,
-                                  onIncrement: () =>
-                                      controller.incrementMeal(meal),
-                                  onDecrement: () =>
-                                      controller.decrementMeal(meal),
-                                ),
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 10),
                                 SizedBox(
-                                  width: 80,
-                                  child: Text(
-                                    l10n.inrPrice(
-                                        item.totalPrice.toStringAsFixed(2)),
-                                    style: AppTextStyles.title,
-                                    textAlign: TextAlign.right,
+                                  width: 150,
+                                  child: Column(
+                                    children: [
+                                      QuantityStepper(
+                                        quantity: item.quantity,
+                                        backgroundColor: colors.primary,
+                                        onIncrement: () =>
+                                            controller.incrementMeal(meal),
+                                        onDecrement: () =>
+                                            controller.decrementMeal(meal),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        l10n.inrPrice(
+                                            item.totalPrice.toStringAsFixed(2)),
+                                        style: AppTextStyles.title,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
