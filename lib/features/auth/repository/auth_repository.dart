@@ -1,95 +1,92 @@
 import 'package:dartz/dartz.dart';
-import '../../../core/network/api_client.dart';
-import '../../../core/network/api_url.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../core/storage/secure_storage.dart';
 import '../model/user_model.dart';
 
 class AuthRepository {
-  final ApiClient _client = ApiClient.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<Either<String, UserModel>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<String, UserModel>> signInWithGoogle() async {
     try {
-      final response = await _client.post(
-        ApiUrl.login,
-        body: {'email': email, 'password': password},
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        return const Left('Sign in cancelled');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
 
-      if (response == null) {
-        return const Left('Login failed. Please try again.');
+      final UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      final User? firebaseUser = userCredential.user;
+
+      if (firebaseUser == null) {
+        return const Left('Google sign in failed');
       }
 
-      final result = response['result'];
-      if (result == null) {
-        final msg = response['message'] ?? 'Login failed.';
-        return Left(msg.toString());
+      final user = UserModel(
+        id: firebaseUser.uid.hashCode,
+        uid: firebaseUser.uid,
+        name: firebaseUser.displayName ?? googleUser.displayName ?? 'User',
+        email: firebaseUser.email ?? googleUser.email,
+        mobile: firebaseUser.phoneNumber,
+        photoUrl: firebaseUser.photoURL ?? googleUser.photoUrl,
+        role: 'user',
+      );
+
+      if (googleAuth.idToken != null) {
+        await SecureStorage.setAccessToken(googleAuth.idToken!);
       }
-
-      await SecureStorage.setAccessToken(result['access_token'] ?? '');
-      await SecureStorage.setRefreshToken(result['refresh_token'] ?? '');
-
-      final user = UserModel.fromJson(result['user'] ?? result);
       await SecureStorage.setUserJson(user.toJsonString());
 
       return Right(user);
-    } on Exception catch (e) {
-      return Left(e.toString());
-    }
-  }
-
-  Future<Either<String, UserModel>> register({
-    required String name,
-    required String email,
-    required String password,
-    required String mobile,
-  }) async {
-    try {
-      final response = await _client.post(
-        ApiUrl.register,
-        body: {
-          'name': name,
-          'email': email,
-          'password': password,
-          'mobile_number': mobile,
-        },
-      );
-
-      if (response == null) {
-        return const Left('Registration failed. Please try again.');
-      }
-
-      final result = response['result'];
-      if (result == null) {
-        return Left(response['message']?.toString() ?? 'Registration failed.');
-      }
-
-      final user = UserModel.fromJson(result);
-      return Right(user);
-    } on Exception catch (e) {
+    } on FirebaseAuthException catch (e) {
+      return Left(e.message ?? 'Authentication error: ${e.code}');
+    } catch (e) {
       return Left(e.toString());
     }
   }
 
   Future<Either<String, bool>> logout() async {
     try {
-      final refreshToken = await SecureStorage.getRefreshToken();
-      await _client.post(
-        ApiUrl.logout,
-        body: {'refresh_token': refreshToken},
-      );
+      try {
+        await _googleSignIn.signOut();
+      } catch (_) {}
+      try {
+        await _firebaseAuth.signOut();
+      } catch (_) {}
       await SecureStorage.clear();
       return const Right(true);
-    } on Exception catch (e) {
+    } catch (e) {
       await SecureStorage.clear();
       return Left(e.toString());
     }
   }
 
   Future<UserModel?> getCachedUser() async {
+    final currentUser = _firebaseAuth.currentUser;
     final json = await SecureStorage.getUserJson();
-    if (json == null || json.isEmpty) return null;
-    return UserModel.fromJsonString(json);
+    final cached = (json != null && json.isNotEmpty) ? UserModel.fromJsonString(json) : null;
+
+    if (currentUser != null) {
+      return UserModel(
+        id: currentUser.uid.hashCode,
+        uid: currentUser.uid,
+        name: currentUser.displayName ?? cached?.name ?? 'User',
+        email: currentUser.email ?? cached?.email,
+        mobile: currentUser.phoneNumber ?? cached?.mobile,
+        photoUrl: currentUser.photoURL ?? cached?.photoUrl,
+        role: 'user',
+      );
+    }
+
+    return cached;
   }
 }

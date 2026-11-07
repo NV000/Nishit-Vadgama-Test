@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../extensions/app_extensions.dart';
+import '../theme/app_text_styles.dart';
 
 class AppLoadingWidget extends StatelessWidget {
   const AppLoadingWidget({super.key, this.message});
@@ -7,17 +9,17 @@ class AppLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(color: scheme.primary),
+          CircularProgressIndicator(color: colors.primary),
           if (message != null) ...[
             const SizedBox(height: 16),
             Text(
               message!,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: AppTextStyles.body,
               textAlign: TextAlign.center,
             ),
           ],
@@ -26,4 +28,3 @@ class AppLoadingWidget extends StatelessWidget {
     );
   }
 }
-

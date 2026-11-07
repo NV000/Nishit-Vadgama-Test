@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../extensions/app_extensions.dart';
 import '../theme/app_text_styles.dart';
 
 class AppButton extends StatelessWidget {
@@ -8,8 +9,11 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.isOutlined = false,
+    this.backgroundColor,
+    this.textColor,
     this.width,
     this.height = 50,
+    this.borderRadius = 26,
     this.icon,
   });
 
@@ -17,35 +21,36 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final bool isOutlined;
+  final Color? backgroundColor;
+  final Color? textColor;
   final double? width;
   final double height;
+  final double borderRadius;
   final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
+    final effectiveBg = backgroundColor ?? colors.primary;
+    final effectiveFg = textColor ?? (isOutlined ? effectiveBg : colors.onPrimary);
 
-    final child = isLoading
+    final content = isLoading
         ? SizedBox(
             width: 22,
             height: 22,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isOutlined ? scheme.primary : scheme.onPrimary,
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(effectiveFg),
             ),
           )
         : Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (icon != null) ...[icon!, const SizedBox(width: 8)],
+              if (icon != null) ...[icon!, const SizedBox(width: 10)],
               Text(
                 label,
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: isOutlined ? scheme.primary : scheme.onPrimary,
-                ),
+                style: AppTextStyles.button.copyWith(color: effectiveFg),
               ),
             ],
           );
@@ -57,10 +62,12 @@ class AppButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: isLoading ? null : onPressed,
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: scheme.primary),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            side: BorderSide(color: effectiveBg),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
           ),
-          child: child,
+          child: content,
         ),
       );
     }
@@ -70,9 +77,16 @@ class AppButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
-        child: child,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: effectiveBg,
+          foregroundColor: effectiveFg,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+        ),
+        child: content,
       ),
     );
   }
 }
-

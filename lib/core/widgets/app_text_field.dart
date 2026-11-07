@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../extensions/app_extensions.dart';
 import '../theme/app_text_styles.dart';
 
 class AppTextField extends StatelessWidget {
@@ -49,7 +50,7 @@ class AppTextField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (label != null) ...[
-          Text(label!, style: AppTextStyles.labelMedium),
+          Text(label!, style: AppTextStyles.subtitle),
           const SizedBox(height: 6),
         ],
         TextFormField(
@@ -66,15 +67,15 @@ class AppTextField extends StatelessWidget {
           onTap: onTap,
           focusNode: focusNode,
           autofillHints: autofillHints,
-          style: AppTextStyles.bodyMedium,
+          style: AppTextStyles.body,
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
+            fillColor: context.colors.surface,
           ),
         ),
       ],
     );
   }
 }
-

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../extensions/app_extensions.dart';
+import '../theme/app_text_styles.dart';
 
 class AppEmptyWidget extends StatelessWidget {
   const AppEmptyWidget({
@@ -16,27 +18,25 @@ class AppEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 56, color: scheme.outline),
+            Icon(icon, size: 56, color: colors.outlineVariant),
             const SizedBox(height: 16),
             Text(
               message,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: scheme.outline,
-                  ),
+              style: AppTextStyles.body.copyWith(color: colors.outlineVariant),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 20),
               FilledButton.tonal(
                 onPressed: onRetry,
-                child: Text(retryLabel),
+                child: Text(retryLabel, style: AppTextStyles.subtitle),
               ),
             ],
           ],
@@ -45,4 +45,3 @@ class AppEmptyWidget extends StatelessWidget {
     );
   }
 }
-

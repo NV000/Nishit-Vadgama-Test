@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../generated/l10n.dart';
 
 extension AppContextExtensions on BuildContext {
+  S get l10n => S.of(this);
   ColorScheme get colors => Theme.of(this).colorScheme;
   TextTheme get appTextTheme => Theme.of(this).textTheme;
   ThemeData get appTheme => Theme.of(this);

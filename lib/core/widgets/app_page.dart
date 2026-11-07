@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../generated/l10n.dart';
-import '../theme/app_colors.dart';
+import '../extensions/app_extensions.dart';
+import '../theme/app_text_styles.dart';
 
 class AppPage extends StatelessWidget {
   const AppPage({
@@ -12,6 +12,7 @@ class AppPage extends StatelessWidget {
     this.padding,
     this.resizeToAvoidBottomInset = true,
     this.floatingActionButton,
+    this.drawer,
     this.confirmExitOnBack = false,
   });
 
@@ -21,6 +22,7 @@ class AppPage extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool resizeToAvoidBottomInset;
   final Widget? floatingActionButton;
+  final Widget? drawer;
   final bool confirmExitOnBack;
 
   Future<void> _handlePopScope(BuildContext context, bool didPop) async {
@@ -33,27 +35,34 @@ class AppPage extends StatelessWidget {
       return;
     }
 
+    final colors = context.colors;
+    final l10n = context.l10n;
+
     final bool? shouldExit = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: colors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          S.current.exitAppTitle,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          l10n.exitAppTitle,
+          style: AppTextStyles.title,
         ),
-        content: Text(S.current.exitAppMessage),
+        content: Text(
+          l10n.exitAppMessage,
+          style: AppTextStyles.body,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(S.current.cancel),
+            child: Text(l10n.cancel, style: AppTextStyles.subtitle),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.error,
-              foregroundColor: AppColors.white,
+              backgroundColor: colors.error,
+              foregroundColor: colors.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(S.current.exit),
+            child: Text(l10n.exit, style: AppTextStyles.subtitle),
           ),
         ],
       ),
@@ -72,8 +81,9 @@ class AppPage extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor ?? context.colors.surface,
           appBar: appBar,
+          drawer: drawer,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           floatingActionButton: floatingActionButton,
           body: padding != null

@@ -63,13 +63,13 @@ class DefaultFirebaseOptions {
     projectId: 'nv-demo-b2725',
     storageBucket: 'nv-demo-b2725.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD9FlcsdoLyQpzqojRlni_DKFNFk4Th4No',
     appId: '1:672373017992:ios:a7fef7b2cc0bfcafd27e3d',
     messagingSenderId: '672373017992',
     projectId: 'nv-demo-b2725',
     storageBucket: 'nv-demo-b2725.firebasestorage.app',
+    iosClientId: '672373017992-tv1eoqjqb33qb0lk27s45otbsgoa4iev.apps.googleusercontent.com',
     iosBundleId: 'com.example.nishitTest',
   );
 }

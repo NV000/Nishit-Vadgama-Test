@@ -170,6 +170,36 @@ class S {
     );
   }
 
+  /// `Sign In with Google`
+  String get signInWithGoogle {
+    return Intl.message(
+      'Sign In with Google',
+      name: 'signInWithGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Google`
+  String get google {
+    return Intl.message(
+      'Google',
+      name: 'google',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OR`
+  String get or {
+    return Intl.message(
+      'OR',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Don't have an account? `
   String get dontHaveAccount {
     return Intl.message(
@@ -350,10 +380,10 @@ class S {
     );
   }
 
-  /// `Logout`
+  /// `Log out`
   String get logout {
     return Intl.message(
-      'Logout',
+      'Log out',
       name: 'logout',
       desc: '',
       args: [],
@@ -545,6 +575,216 @@ class S {
     return Intl.message(
       'Exit',
       name: 'exit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Menu`
+  String get menu {
+    return Intl.message(
+      'Menu',
+      name: 'menu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cart`
+  String get cart {
+    return Intl.message(
+      'Cart',
+      name: 'cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checkout`
+  String get checkout {
+    return Intl.message(
+      'Checkout',
+      name: 'checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Summary`
+  String get orderSummary {
+    return Intl.message(
+      'Order Summary',
+      name: 'orderSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place Order`
+  String get placeOrder {
+    return Intl.message(
+      'Place Order',
+      name: 'placeOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Placed Successfully`
+  String get orderSuccessful {
+    return Intl.message(
+      'Order Placed Successfully',
+      name: 'orderSuccessful',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order successfully placed`
+  String get orderSuccessfullyPlaced {
+    return Intl.message(
+      'Order successfully placed',
+      name: 'orderSuccessfullyPlaced',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} calories`
+  String calories(Object count) {
+    return Intl.message(
+      '$count calories',
+      name: 'calories',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Customizations available`
+  String get customizationsAvailable {
+    return Intl.message(
+      'Customizations available',
+      name: 'customizationsAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{dishes} Dishes - {items} Items`
+  String dishesAndItemsCount(Object dishes, Object items) {
+    return Intl.message(
+      '$dishes Dishes - $items Items',
+      name: 'dishesAndItemsCount',
+      desc: '',
+      args: [dishes, items],
+    );
+  }
+
+  /// `INR {price}`
+  String inrPrice(Object price) {
+    return Intl.message(
+      'INR $price',
+      name: 'inrPrice',
+      desc: '',
+      args: [price],
+    );
+  }
+
+  /// `Total Amount`
+  String get totalAmount {
+    return Intl.message(
+      'Total Amount',
+      name: 'totalAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No items in your cart`
+  String get noItemsInCart {
+    return Intl.message(
+      'No items in your cart',
+      name: 'noItemsInCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back to Menu`
+  String get backToMenu {
+    return Intl.message(
+      'Back to Menu',
+      name: 'backToMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading restaurant menu...`
+  String get loadingRestaurantMenu {
+    return Intl.message(
+      'Loading restaurant menu...',
+      name: 'loadingRestaurantMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No menu categories found`
+  String get noMenuCategoriesFound {
+    return Intl.message(
+      'No menu categories found',
+      name: 'noMenuCategoriesFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your cart is empty`
+  String get cartIsEmpty {
+    return Intl.message(
+      'Your cart is empty',
+      name: 'cartIsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID : {id}`
+  String userId(Object id) {
+    return Intl.message(
+      'ID : $id',
+      name: 'userId',
+      desc: '',
+      args: [id],
+    );
+  }
+
+  /// `User`
+  String get userDefault {
+    return Intl.message(
+      'User',
+      name: 'userDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `UNI Resto Cafe`
+  String get defaultRestaurantName {
+    return Intl.message(
+      'UNI Resto Cafe',
+      name: 'defaultRestaurantName',
       desc: '',
       args: [],
     );

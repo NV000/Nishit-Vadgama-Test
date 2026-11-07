@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 
 enum SnackType { success, error, info }
 
@@ -13,9 +15,9 @@ class AppSnackbar {
     Duration duration = const Duration(seconds: 3),
   }) {
     final (bg, icon) = switch (type) {
-      SnackType.success => (const Color(0xFF10B981), Icons.check_circle_rounded),
-      SnackType.error => (const Color(0xFFEF4444), Icons.error_rounded),
-      SnackType.info => (const Color(0xFF2563EB), Icons.info_rounded),
+      SnackType.success => (AppColors.green, Icons.check_circle_rounded),
+      SnackType.error => (AppColors.red, Icons.error_rounded),
+      SnackType.info => (AppColors.blue, Icons.info_rounded),
     };
 
     Get.rawSnackbar(
@@ -26,15 +28,15 @@ class AppSnackbar {
       margin: const EdgeInsets.all(16),
       borderRadius: 10,
       duration: duration,
-      icon: Icon(icon, color: Colors.white, size: 24),
+      icon: Icon(icon, color: AppColors.white, size: 24),
       messageText: Text(
         message,
-        style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400),
+        style: AppTextStyles.body.copyWith(color: AppColors.white),
       ),
       titleText: title != null
           ? Text(
               title,
-              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+              style: AppTextStyles.title.copyWith(color: AppColors.white),
             )
           : null,
     );
@@ -49,4 +51,3 @@ class AppSnackbar {
   static void info(String message, {String? title}) =>
       show(message: message, type: SnackType.info, title: title);
 }
-

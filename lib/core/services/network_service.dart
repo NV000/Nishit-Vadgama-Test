@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../generated/l10n.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 
 class NetworkService extends GetxService {
   static NetworkService get to => Get.find();
@@ -53,6 +54,7 @@ class NetworkService extends GetxService {
       PopScope(
         canPop: false,
         child: Dialog(
+          backgroundColor: AppColors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -63,33 +65,25 @@ class NetworkService extends GetxService {
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: AppColors.pastelBlue.withValues(alpha: 0.3),
+                    color: AppColors.red.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.wifi_off_rounded,
                     size: 32,
-                    color: AppColors.primary,
+                    color: AppColors.red,
                   ),
                 ),
                 const SizedBox(height: 18),
                 Text(
                   S.current.noInternetTitle,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppTextStyles.title,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
                 Text(
                   S.current.noInternetMessage,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                    height: 1.4,
-                  ),
+                  style: AppTextStyles.body,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -98,7 +92,7 @@ class NetworkService extends GetxService {
                   height: 24,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
                   ),
                 ),
               ],
@@ -125,4 +119,3 @@ class NetworkService extends GetxService {
     super.onClose();
   }
 }
-

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'core/services/app_language_service.dart';
 import 'core/services/network_service.dart';
 import 'core/theme/app_theme.dart';
+import 'features/auth/repository/auth_repository.dart';
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
 import 'routes/app_pages.dart';
@@ -32,11 +33,17 @@ Future<void> main() async {
   Get.put<AppLanguageService>(AppLanguageService(), permanent: true);
   Get.put<NetworkService>(NetworkService(), permanent: true);
 
-  runApp(const NVTestApp());
+  final authRepo = AuthRepository();
+  final cachedUser = await authRepo.getCachedUser();
+  final initialRoute = cachedUser != null ? AppRoutes.home : AppRoutes.auth;
+
+  runApp(NVTestApp(initialRoute: initialRoute));
 }
 
 class NVTestApp extends StatelessWidget {
-  const NVTestApp({super.key});
+  const NVTestApp({super.key, required this.initialRoute});
+
+  final String initialRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +63,7 @@ class NVTestApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        initialRoute: AppRoutes.login,
+        initialRoute: initialRoute,
         getPages: AppPages.pages,
         defaultTransition: Transition.fadeIn,
         builder: (context, child) => MediaQuery(

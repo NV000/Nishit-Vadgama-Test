@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import '../features/auth/binding/auth_binding.dart';
-import '../features/auth/view/login_page.dart';
-import '../features/auth/view/register_page.dart';
-import '../features/home/binding/home_binding.dart';
-import '../features/home/view/home_page.dart';
+import '../features/auth/view/auth_screen.dart';
+import '../features/restaurant/controller/restaurant_controller.dart';
+import '../features/restaurant/view/checkout_page.dart';
+import '../features/restaurant/view/restaurant_home_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -11,23 +11,31 @@ class AppPages {
 
   static final pages = [
     GetPage(
-      name: AppRoutes.login,
-      page: () => const LoginPage(),
+      name: AppRoutes.auth,
+      page: () => const AuthScreen(),
       binding: AuthBinding(),
       transition: Transition.fadeIn,
-    ),
-    GetPage(
-      name: AppRoutes.register,
-      page: () => const RegisterPage(),
-      binding: AuthBinding(),
-      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.home,
-      page: () => const HomePage(),
-      bindings: [AuthBinding(), HomeBinding()],
+      page: () => const RestaurantHomePage(),
+      bindings: [
+        AuthBinding(),
+        BindingsBuilder(() {
+          Get.lazyPut<RestaurantController>(() => RestaurantController());
+        }),
+      ],
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: AppRoutes.checkout,
+      page: () => const CheckoutPage(),
+      binding: BindingsBuilder(() {
+        if (!Get.isRegistered<RestaurantController>()) {
+          Get.lazyPut<RestaurantController>(() => RestaurantController());
+        }
+      }),
+      transition: Transition.rightToLeft,
     ),
   ];
 }
-
